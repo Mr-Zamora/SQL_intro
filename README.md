@@ -41,6 +41,31 @@ A simple, beginner-friendly introduction to using SQL (Structured Query Language
 
 4. To view the database file (`mydatabase.db`), we recommend using [DB Browser for SQLite](https://sqlitebrowser.org/).
 
+## Script Flowchart
+
+The following diagram illustrates the workflow of the `sql_tutorial.py` script:
+
+```mermaid
+graph TD
+    A[Start] --> B{Connect to mydatabase.db};
+    B --> C{Create Cursor};
+    C --> D[SQL: CREATE TABLE users];
+    D --> E[SQL: INSERT 3 Users];
+    E --> F{Commit Changes};
+    F --> G[SQL: SELECT All Users];
+    G --> H[Print All Users];
+    H --> I[SQL: UPDATE Bob's Email];
+    I --> J{Commit Changes};
+    J --> K[SQL: SELECT Bob];
+    K --> L[Print Bob's Record];
+    L --> M[SQL: DELETE Charlie];
+    M --> N{Commit Changes};
+    N --> O[SQL: SELECT All Users];
+    O --> P[Print Final Table];
+    P --> Q{Close Connection};
+    Q --> R[End];
+```
+
 ## Further Learning
 
 For a complete explanation of all the SQL concepts used in this project, see the `SQL_INTRO.md` file included in this repository. It provides a detailed, beginner-friendly breakdown of:
