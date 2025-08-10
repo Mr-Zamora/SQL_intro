@@ -111,6 +111,42 @@ for user in final_users:
 conn.close()
 ```
 
+### Script Sequence Diagram
+
+The following sequence diagram provides a visual representation of how the Python script communicates with the `mydatabase.db` file. It shows the step-by-step flow of commands sent from the script to the database and the data that is returned.
+
+```mermaid
+sequenceDiagram
+    participant Script as Python Script
+    participant DB as mydatabase.db
+
+    Script->>DB: connect()
+    Script->>DB: cursor()
+    Script->>DB: EXECUTE "CREATE TABLE users..."
+    Script->>DB: EXECUTE "INSERT INTO users..."
+    Script->>DB: commit()
+    Script->>DB: EXECUTE "SELECT * FROM users"
+    activate DB
+    DB-->>Script: Return all users
+    deactivate DB
+    Script->>Script: Print all users
+    Script->>DB: EXECUTE "UPDATE users..."
+    Script->>DB: commit()
+    Script->>DB: EXECUTE "SELECT * FROM users WHERE name='Bob'"
+    activate DB
+    DB-->>Script: Return Bob's record
+    deactivate DB
+    Script->>Script: Print Bob's record
+    Script->>DB: EXECUTE "DELETE FROM users..."
+    Script->>DB: commit()
+    Script->>DB: EXECUTE "SELECT * FROM users"
+    activate DB
+    DB-->>Script: Return final users
+    deactivate DB
+    Script->>Script: Print final users
+    Script->>DB: close()
+```
+
 ## Key Python `sqlite3` Components Explained
 
 While SQL is the language for talking to the database, Python's `sqlite3` library provides the tools to send those commands and handle the results. Here are the key components from the script:

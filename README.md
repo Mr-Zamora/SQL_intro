@@ -43,27 +43,38 @@ A simple, beginner-friendly introduction to using SQL (Structured Query Language
 
 ## Script Flowchart
 
-The following diagram illustrates the workflow of the `sql_tutorial.py` script:
+The following sequence diagram illustrates the interaction between the `sql_tutorial.py` script and the `mydatabase.db` file:
 
 ```mermaid
-graph TD
-    A[Start] --> B{Connect to mydatabase.db};
-    B --> C{Create Cursor};
-    C --> D[SQL: CREATE TABLE users];
-    D --> E[SQL: INSERT 3 Users];
-    E --> F{Commit Changes};
-    F --> G[SQL: SELECT All Users];
-    G --> H[Print All Users];
-    H --> I[SQL: UPDATE Bob's Email];
-    I --> J{Commit Changes};
-    J --> K[SQL: SELECT Bob];
-    K --> L[Print Bob's Record];
-    L --> M[SQL: DELETE Charlie];
-    M --> N{Commit Changes};
-    N --> O[SQL: SELECT All Users];
-    O --> P[Print Final Table];
-    P --> Q{Close Connection};
-    Q --> R[End];
+sequenceDiagram
+    participant Script as Python Script
+    participant DB as mydatabase.db
+
+    Script->>DB: connect()
+    Script->>DB: cursor()
+    Script->>DB: EXECUTE "CREATE TABLE users..."
+    Script->>DB: EXECUTE "INSERT INTO users..."
+    Script->>DB: commit()
+    Script->>DB: EXECUTE "SELECT * FROM users"
+    activate DB
+    DB-->>Script: Return all users
+    deactivate DB
+    Script->>Script: Print all users
+    Script->>DB: EXECUTE "UPDATE users..."
+    Script->>DB: commit()
+    Script->>DB: EXECUTE "SELECT * FROM users WHERE name='Bob'"
+    activate DB
+    DB-->>Script: Return Bob's record
+    deactivate DB
+    Script->>Script: Print Bob's record
+    Script->>DB: EXECUTE "DELETE FROM users..."
+    Script->>DB: commit()
+    Script->>DB: EXECUTE "SELECT * FROM users"
+    activate DB
+    DB-->>Script: Return final users
+    deactivate DB
+    Script->>Script: Print final users
+    Script->>DB: close()
 ```
 
 ## Further Learning
