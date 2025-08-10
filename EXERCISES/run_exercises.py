@@ -1,8 +1,8 @@
 import sqlite3
 import os
 
-# Define the database file path
-DB_FILE = "students.db"
+# Define the database file path - ensure it's in the same directory as this script
+DB_FILE = os.path.join(os.path.dirname(__file__), "students.db")
 
 def setup_database():
     """Create and populate the database if it doesn't exist."""
